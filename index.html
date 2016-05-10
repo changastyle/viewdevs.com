@@ -3,93 +3,10 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <style>
-            body
-            {
-               background-color:#202020;
-            }
-            .banner
-            {
-                //background-color:rgba(0,0,0,0.7);
-                background-color:transparent;
-                
-                transition: 1s;
-                position:fixed;
-                top:0px;
-                z-index: 1;
-                color:white;
-            }
-            .bannerBlanco
-            {
-                background-color:white;
-                transition: 1s;
-                color:black;
-                box-shadow: 2px 2px 2px 5px black;
-            
-            }
-            .documento
-            {   
-               padding:15px;
-            }
-              
-            .imgCentral
-            {
-                min-height: 500px;
-                background-image: url('imgCentral1.jpg');
-                background-repeat: no-repeat;
-                background-size: cover;
-            }
-            .sombraImgCentral
-            {
-                background-color:rgba(0,0,0,0.25); 
-                min-height: 500px;
-                width: 100%;
-            }
-            a:hover
-            {
-                text-decoration: none;
-            }
-            .itemResto
-            {
-                overflow: hidden;
-                min-height: 400px;
-                border:solid 2px black;
-                padding:80px;
-                border:solid 2px black;
-                
-            }
-            #itemResto1
-            {
-                background-color:#DD4B39;
-            }
-            #itemResto2
-            {
-                text-align: center;
-            }
-            .columnaItemRestp
-            {
-                padding:80px;
-            }
-            .footer
-            {
-                text-align: center;
-            }
-            .columna-footer
-            {
-                border:solid 2px white;
-                text-align: center;
-                color:#D66F3F;
-            }
-            .columna-footer-header
-            {
-                font:"Arial";
-                font-size: 24px;
-                text-align: center;
-                color:#AAAAAA;
-            }
-        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <link rel="stylesheet" href="index.css">
     </head>
-    <body>
+    <body ng-app="app" ng-controller="controllerViewDevs">
         <div class="banner col-xs-12">
             <h3><a href="">View Devs Company</a></h3>
         </div>
@@ -97,6 +14,10 @@
             
             <div class="imgCentral">
                 <div class="sombraImgCentral">
+                    <img src="logo.png" class="col-xs-4 col-xs-offset-4" id="logo">
+                    <div class="col-xs-4 col-xs-offset-4" id="pieLogo">
+                        
+                    </div>
                 </div>
             </div>
             <div class="resto">
@@ -164,8 +85,43 @@
         
     </body>
     <script>
+    app = angular.module('app', []);
+    
+    app.controller('controllerViewDevs', function($scope, $http) 
+    {
+        $scope.strings = ["Desarrollo Web..","Apps..","VideoJuegos..","Marketing a Empresas.."];
+        token = 0;
+        
+        $scope.tiempoIntervalo = 400;
+        contador = 1;
+        setInterval(function()
+        {
+            console.log("paso:" + $scope.tiempoIntervalo * contador);
+         
+            if(contador > $scope.strings[token].length)
+            {
+                token ++;
+                contador = 1;
+                if(token == $scope.strings.length )
+                {
+                    token = 0;
+                }
+            }
+            else
+            {
+                $("#pieLogo").html($scope.strings[token].substring(0,contador));
+            
+                contador++;
+            }
+            
+                
+        },$scope.tiempoIntervalo);
+    });
+
+        
     $(document).scroll(function()
     {
+        
         console.log("scroleando..." + $(document).scrollTop() );
         
         y = parseInt($(document).scrollTop());
